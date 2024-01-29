@@ -1,0 +1,9 @@
+# Build Dev Related
+build_exe.bat
+DEV_README.md
+main.spec
+__pycache__/
+dist/
+build/
+.vscode/
+my_new_venv/

@@ -1,0 +1,146 @@
+[2024-01-28 20:37:36] {'fred_api_key': 'FRED API KEY GOES HERE', 'alpha_vantage_api_key': 'LJ0B09SRT4FUZ0RS', 'trader_made_api_key': 'TRADER MADE API KEY GOES HERE'}
+[2024-01-29 08:50:13] {'fred_api_key': 'FRED API KEY GOES HERE', 'alpha_vantage_api_key': 'LJ0B09SRT4FUZ0RS', 'trader_made_api_key': 'TRADER MADE API KEY GOES HERE'}
+[2024-01-29 08:56:50] Trader Made API key saved.
+[2024-01-29 08:56:51] Fred API key saved.
+[2024-01-29 08:56:59] Fetching data...
+[2024-01-29 08:57:03] Now fetching Federal Funds Interest Rate historical...
+[2024-01-29 08:57:03] this is inside the final fetch economic data, this is the API KEY for FRED 21f3876b17d559fb44f618897bd9d026
+[2024-01-29 08:57:03] data_type = Federal Funds Interest Rate
+[2024-01-29 08:57:03] data_type TYPE is <class 'str'>
+[2024-01-29 08:57:03] data_type is equal to Federal Funds Rate True
+[2024-01-29 08:57:03] Series ID variable is FEDFUNDS after the else if statements in api_interaction.py
+[2024-01-29 08:57:03] We are inside the check_last_pull_was_today()
+[2024-01-29 08:57:03] We are inside the read_last_pull_timestamp()
+[2024-01-29 08:57:03] The last pull timestamp for Economic Data is 2024-01-28T19:38:01.961349
+[2024-01-29 08:57:03] After conversion of last_pull_datetime to isoformat 2024-01-28 19:38:01.961349
+[2024-01-29 08:57:04] We are inside the update_last_pull_timestamp()
+[2024-01-29 08:57:04] The current timestamp is 2024-01-29T08:57:04.194050
+[2024-01-29 08:57:04] the timestamp update for this data pull is 2024-01-29T08:57:04.194050
+[2024-01-29 08:57:04] This is the data that is being posted to the last_pull.json file:
+
+
+{'Economic Data': {'Federal Funds Interest Rate': '2024-01-29T08:57:04.194050', 'Non-Farm Employees': '2024-01-28T19:38:03.852073', 'Unemployment Rate': '2024-01-28T19:38:05.485560', 'GDP Reports': '2024-01-28T19:38:07.221320', 'Inflation Data (CPI)': '2024-01-28T19:38:08.867991'}, 'Currency Pairs': {'EURUSD': '2024-01-28T19:39:59.992919', 'NZDCAD': '2024-01-28T19:58:33.406346'}}
+
+
+
+[2024-01-29 08:57:04] success! Retrieving data now...
+[2024-01-29 08:57:04] Data Example:
+realtime_start    2024-01-29
+realtime_end      2024-01-29
+date              1954-07-01
+value                   0.80
+Name: 0, dtype: object
+[2024-01-29 08:57:04] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\Federal Funds Interest Rate_history.csv
+[2024-01-29 08:57:05] Now fetching Non-Farm Employees historical...
+[2024-01-29 08:57:05] this is inside the final fetch economic data, this is the API KEY for FRED 21f3876b17d559fb44f618897bd9d026
+[2024-01-29 08:57:05] data_type = Non-Farm Employees
+[2024-01-29 08:57:05] data_type TYPE is <class 'str'>
+[2024-01-29 08:57:05] data_type is equal to Federal Funds Rate False
+[2024-01-29 08:57:05] Series ID variable is PAYEMS after the else if statements in api_interaction.py
+[2024-01-29 08:57:05] We are inside the check_last_pull_was_today()
+[2024-01-29 08:57:05] We are inside the read_last_pull_timestamp()
+[2024-01-29 08:57:05] The last pull timestamp for Economic Data is 2024-01-28T19:38:03.852073
+[2024-01-29 08:57:05] After conversion of last_pull_datetime to isoformat 2024-01-28 19:38:03.852073
+[2024-01-29 08:57:05] We are inside the update_last_pull_timestamp()
+[2024-01-29 08:57:05] The current timestamp is 2024-01-29T08:57:05.664971
+[2024-01-29 08:57:05] the timestamp update for this data pull is 2024-01-29T08:57:05.664971
+[2024-01-29 08:57:05] This is the data that is being posted to the last_pull.json file:
+
+
+{'Economic Data': {'Federal Funds Interest Rate': '2024-01-29T08:57:04.194050', 'Non-Farm Employees': '2024-01-29T08:57:05.664971', 'Unemployment Rate': '2024-01-28T19:38:05.485560', 'GDP Reports': '2024-01-28T19:38:07.221320', 'Inflation Data (CPI)': '2024-01-28T19:38:08.867991'}, 'Currency Pairs': {'EURUSD': '2024-01-28T19:39:59.992919', 'NZDCAD': '2024-01-28T19:58:33.406346'}}
+
+
+
+[2024-01-29 08:57:05] success! Retrieving data now...
+[2024-01-29 08:57:05] Data Example:
+realtime_start    2024-01-29
+realtime_end      2024-01-29
+date              1939-01-01
+value                  29923
+Name: 0, dtype: object
+[2024-01-29 08:57:05] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\Non-Farm Employees_history.csv
+[2024-01-29 08:57:06] Now fetching Unemployment Rate historical...
+[2024-01-29 08:57:06] this is inside the final fetch economic data, this is the API KEY for FRED 21f3876b17d559fb44f618897bd9d026
+[2024-01-29 08:57:06] data_type = Unemployment Rate
+[2024-01-29 08:57:06] data_type TYPE is <class 'str'>
+[2024-01-29 08:57:06] data_type is equal to Federal Funds Rate False
+[2024-01-29 08:57:06] Series ID variable is UNRATE after the else if statements in api_interaction.py
+[2024-01-29 08:57:06] We are inside the check_last_pull_was_today()
+[2024-01-29 08:57:06] We are inside the read_last_pull_timestamp()
+[2024-01-29 08:57:06] The last pull timestamp for Economic Data is 2024-01-28T19:38:05.485560
+[2024-01-29 08:57:06] After conversion of last_pull_datetime to isoformat 2024-01-28 19:38:05.485560
+[2024-01-29 08:57:07] We are inside the update_last_pull_timestamp()
+[2024-01-29 08:57:07] The current timestamp is 2024-01-29T08:57:07.227458
+[2024-01-29 08:57:07] the timestamp update for this data pull is 2024-01-29T08:57:07.227458
+[2024-01-29 08:57:07] This is the data that is being posted to the last_pull.json file:
+
+
+{'Economic Data': {'Federal Funds Interest Rate': '2024-01-29T08:57:04.194050', 'Non-Farm Employees': '2024-01-29T08:57:05.664971', 'Unemployment Rate': '2024-01-29T08:57:07.227458', 'GDP Reports': '2024-01-28T19:38:07.221320', 'Inflation Data (CPI)': '2024-01-28T19:38:08.867991'}, 'Currency Pairs': {'EURUSD': '2024-01-28T19:39:59.992919', 'NZDCAD': '2024-01-28T19:58:33.406346'}}
+
+
+
+[2024-01-29 08:57:07] success! Retrieving data now...
+[2024-01-29 08:57:07] Data Example:
+realtime_start    2024-01-29
+realtime_end      2024-01-29
+date              1948-01-01
+value                    3.4
+Name: 0, dtype: object
+[2024-01-29 08:57:07] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\Unemployment Rate_history.csv
+[2024-01-29 08:57:08] Now fetching GDP Reports historical...
+[2024-01-29 08:57:08] this is inside the final fetch economic data, this is the API KEY for FRED 21f3876b17d559fb44f618897bd9d026
+[2024-01-29 08:57:08] data_type = GDP Reports
+[2024-01-29 08:57:08] data_type TYPE is <class 'str'>
+[2024-01-29 08:57:08] data_type is equal to Federal Funds Rate False
+[2024-01-29 08:57:08] Series ID variable is GDP after the else if statements in api_interaction.py
+[2024-01-29 08:57:08] We are inside the check_last_pull_was_today()
+[2024-01-29 08:57:08] We are inside the read_last_pull_timestamp()
+[2024-01-29 08:57:08] The last pull timestamp for Economic Data is 2024-01-28T19:38:07.221320
+[2024-01-29 08:57:08] After conversion of last_pull_datetime to isoformat 2024-01-28 19:38:07.221320
+[2024-01-29 08:57:08] We are inside the update_last_pull_timestamp()
+[2024-01-29 08:57:08] The current timestamp is 2024-01-29T08:57:08.871435
+[2024-01-29 08:57:08] the timestamp update for this data pull is 2024-01-29T08:57:08.871435
+[2024-01-29 08:57:08] This is the data that is being posted to the last_pull.json file:
+
+
+{'Economic Data': {'Federal Funds Interest Rate': '2024-01-29T08:57:04.194050', 'Non-Farm Employees': '2024-01-29T08:57:05.664971', 'Unemployment Rate': '2024-01-29T08:57:07.227458', 'GDP Reports': '2024-01-29T08:57:08.871435', 'Inflation Data (CPI)': '2024-01-28T19:38:08.867991'}, 'Currency Pairs': {'EURUSD': '2024-01-28T19:39:59.992919', 'NZDCAD': '2024-01-28T19:58:33.406346'}}
+
+
+
+[2024-01-29 08:57:08] success! Retrieving data now...
+[2024-01-29 08:57:08] Data Example:
+realtime_start    2024-01-29
+realtime_end      2024-01-29
+date              1946-01-01
+value                      .
+Name: 0, dtype: object
+[2024-01-29 08:57:08] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\GDP Reports_history.csv
+[2024-01-29 08:57:09] Now fetching Inflation Data (CPI) historical...
+[2024-01-29 08:57:09] this is inside the final fetch economic data, this is the API KEY for FRED 21f3876b17d559fb44f618897bd9d026
+[2024-01-29 08:57:09] data_type = Inflation Data (CPI)
+[2024-01-29 08:57:09] data_type TYPE is <class 'str'>
+[2024-01-29 08:57:09] data_type is equal to Federal Funds Rate False
+[2024-01-29 08:57:09] Series ID variable is CPIAUCSL after the else if statements in api_interaction.py
+[2024-01-29 08:57:09] We are inside the check_last_pull_was_today()
+[2024-01-29 08:57:09] We are inside the read_last_pull_timestamp()
+[2024-01-29 08:57:09] The last pull timestamp for Economic Data is 2024-01-28T19:38:08.867991
+[2024-01-29 08:57:09] After conversion of last_pull_datetime to isoformat 2024-01-28 19:38:08.867991
+[2024-01-29 08:57:10] We are inside the update_last_pull_timestamp()
+[2024-01-29 08:57:10] The current timestamp is 2024-01-29T08:57:10.420762
+[2024-01-29 08:57:10] the timestamp update for this data pull is 2024-01-29T08:57:10.420762
+[2024-01-29 08:57:10] This is the data that is being posted to the last_pull.json file:
+
+
+{'Economic Data': {'Federal Funds Interest Rate': '2024-01-29T08:57:04.194050', 'Non-Farm Employees': '2024-01-29T08:57:05.664971', 'Unemployment Rate': '2024-01-29T08:57:07.227458', 'GDP Reports': '2024-01-29T08:57:08.871435', 'Inflation Data (CPI)': '2024-01-29T08:57:10.420762'}, 'Currency Pairs': {'EURUSD': '2024-01-28T19:39:59.992919', 'NZDCAD': '2024-01-28T19:58:33.406346'}}
+
+
+
+[2024-01-29 08:57:10] success! Retrieving data now...
+[2024-01-29 08:57:10] Data Example:
+realtime_start    2024-01-29
+realtime_end      2024-01-29
+date              1947-01-01
+value                  21.48
+Name: 0, dtype: object
+[2024-01-29 08:57:10] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\Inflation Data (CPI)_history.csv
+[2024-01-29 08:57:11] Data fetching complete.
