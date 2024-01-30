@@ -7,7 +7,10 @@ from matplotlib.figure import Figure
 import utilities
 
 # Function to generate and display the graph in a separate window
-def generate_graph(root, start_date, end_date, base_dir):
+def generate_graph(root, base_dir, app_state):
+
+    start_date, end_date = app_state.get_graphing_dates()
+
     # Specify the path to your CSV file
     absolute_file_path = utilities.resource_path("Transform_Data_db/output/4_processed_stationary_data.csv", base_dir)
 
@@ -49,11 +52,12 @@ def generate_graph(root, start_date, end_date, base_dir):
     canvas.draw()
 
 # Function to ask for date range
-def ask_date_range(root, base_dir):
-    default_start = "1980-01-01"
-    default_end = "1991-07-01"
+def ask_date_range(root, base_dir, app_state):
+    default_start, default_end = app_state.get_graphing_dates()
     start_date = simpledialog.askstring("Input", "Enter start date (YYYY-MM-DD):", initialvalue=default_start, parent=root)
     end_date = simpledialog.askstring("Input", "Enter end date (YYYY-MM-DD):", initialvalue=default_end, parent=root)
     
-    if start_date and end_date:
-        generate_graph(root, start_date, end_date, base_dir)
+    app_state.set_graphing_dates(start_date, end_date)
+
+    # if start_date and end_date:
+    #     generate_graph(root, start_date, end_date, base_dir)

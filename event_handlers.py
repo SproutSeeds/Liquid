@@ -84,8 +84,8 @@ def on_process_data_click(is_normalized, is_standardized, base_dir):
         messagebox.showerror("Error", f"An error occurred: {e}")
 
 
-def on_graph_click(root, base_dir):
-        graph.generate_graph(root, base_dir)
+def on_graph_click(root, base_dir, app_state):
+        graph.generate_graph(root, base_dir, app_state)
 
 def update_checkboxes(normalization_var, standardization_var, clicked):
     if clicked == 'normalization':

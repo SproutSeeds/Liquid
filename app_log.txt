@@ -144,3 +144,6 @@ value                  21.48
 Name: 0, dtype: object
 [2024-01-29 08:57:10] Data saved in the Historical folder as C:\Users\codyr\OneDrive\Documents\_Cody\USD_strength\myapp\Historical_Data\Inflation Data (CPI)_history.csv
 [2024-01-29 08:57:11] Data fetching complete.
+[2024-01-29 15:31:10] {'fred_api_key': '', 'alpha_vantage_api_key': '', 'trader_made_api_key': ''}
+[2024-01-29 15:33:33] {'fred_api_key': '', 'alpha_vantage_api_key': '', 'trader_made_api_key': ''}
+[2024-01-29 20:59:17] {'fred_api_key': '', 'alpha_vantage_api_key': '', 'trader_made_api_key': '', 'training_start_date': '2024-01-01', 'training_end_date': '2024-06-30', 'testing_start_date': '2024-07-01', 'testing_end_date': '2024-12-31', 'graphing_start_date': '2000-01-01', 'graphing_end_date': '2001-01-01'}

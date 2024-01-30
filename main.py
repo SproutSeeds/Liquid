@@ -13,22 +13,28 @@ import utilities
 import sys
 import os
 import shutil
+import app_state
 
 # print(sys.path)
 
 
 def main():
 
+    base_dir = utilities.get_base_dir()
+
+    # File path definition 
+    Config_Settings_file_path = utilities.resource_path('settings.json', base_dir)
+
+    # Setting the state for our app from our config file "settings.json"
+    the_app_state = app_state.AppState(Config_Settings_file_path)
+
     global data_type_var, economic_data_var, currency_pair_var
     global fred_api_key_var, trader_made_api_key_var
     global economic_data_menu, currency_pair_menu
     global fetch_all_economic_button, fetch_all_currency_button
 
-    base_dir = utilities.get_base_dir()
-    
     # Create the folders/files
     utilities.create_missing_files_and_folders(base_dir)
-    
 
     global_currency_list = [
         "AUDCAD",
@@ -210,11 +216,11 @@ def main():
         messagebox.showinfo("Update Required", "Please update your economic data before processing.")
 
     # create date range button
-    date_range_button = tk.Button(root, text="Select Date Range", command=lambda: graph.ask_date_range(root, base_dir))
+    date_range_button = tk.Button(root, text="Select Date Range", command=lambda: graph.ask_date_range(root, base_dir, the_app_state))
     date_range_button.grid(row=18, column=0, columnspan=2) 
     
     # Create the "GRAPH" button and place it in row 8
-    graph_button = tk.Button(root, text="GRAPH", command=lambda: event_handlers.on_graph_click(root, base_dir))
+    graph_button = tk.Button(root, text="GRAPH", command=lambda: event_handlers.on_graph_click(root, base_dir, the_app_state))
     graph_button.grid(row=20, column=2, columnspan=4)  # Place the button in row 8
 
 
