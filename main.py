@@ -26,15 +26,21 @@ def main():
     Config_Settings_file_path = utilities.resource_path('settings.json', base_dir)
 
     # Setting the state for our app from our config file "settings.json"
-    the_app_state = app_state.AppState(Config_Settings_file_path)
+    the_app_state = app_state.AppState(Config_Settings_file_path, base_dir)
+    
+    root = gui.create_root_window()
 
     global data_type_var, economic_data_var, currency_pair_var
     global fred_api_key_var, trader_made_api_key_var
     global economic_data_menu, currency_pair_menu
     global fetch_all_economic_button, fetch_all_currency_button
 
-    # Create the folders/files
-    utilities.create_missing_files_and_folders(base_dir)
+    USD_currency_pairs = [
+        "AUD/USD", "EUR/USD", "GBP/USD", "USD/CAD", "USD/CHF", "USD/CNH",
+        "USD/CZK", "USD/DKK", "USD/HKD", "USD/HUF", "USD/IDR", "USD/INR",
+        "USD/JPY", "USD/MXN", "USD/NOK", "USD/PLN", "USD/RUB", "USD/SEK",
+        "USD/SGD", "USD/THB", "USD/TRY", "USD/ZAR"
+    ]
 
     global_currency_list = [
         "AUDCAD",
@@ -81,26 +87,25 @@ def main():
         "USDZAR",
     ]
 
-    settings_json_file = utilities.resource_path('settings.json')
+    # settings_json_file = utilities.resource_path('settings.json')
 
-    app_settings = settings.load_settings(settings_json_file)
-    utilities.log_message(app_settings, console_output=False)
+    # app_settings = settings.load_settings(settings_json_file)
+    # utilities.log_message(app_settings, console_output=False)
 
-
-    root = gui.create_root_window()
 
     data_type_var = tk.StringVar(value="Select Data Type")
     economic_data_var = tk.StringVar(value="Select Economic Data")
     currency_pair_var = tk.StringVar(value="Select Currency Pair")
-    fred_api_key_var = tk.StringVar(value=app_settings.get("fred_api_key", ""))
+    fred_api_key_var = tk.StringVar(value=the_app_state.get_fred_api_key())
     trader_made_api_key_var = tk.StringVar(
-        value=app_settings.get("trader_made_api_key", "")
+        value=the_app_state.get_trader_made_api_key()
     )
 
     # Create API key input fields using the updated create_api_key_input function
-    gui.create_api_key_input(root, "FRED API Key:", fred_api_key_var, 'fred', base_dir, row=0, column=0)
-    gui.create_api_key_input(root, "Trader Made API Key:", trader_made_api_key_var, 'trader_made', base_dir, row=1, column=0)
+    fred_api_key_frame, fred_api_key_entry = gui.create_api_key_input(root, "FRED API Key:", fred_api_key_var, 'fred', base_dir, the_app_state, row=0, column=0)
+    trader_made_api_key_frame, trader_made_api_key_entry = gui.create_api_key_input(root, "Trader Made API Key:", trader_made_api_key_var, 'trader_made', base_dir, the_app_state, row=1, column=0)
 
+    
     #  # Create input fields for API keys
     # fred_api_key_frame = gui.create_api_key_input(root, "FRED API Key:", fred_api_key_var, 'fred')
     # trader_made_api_key_frame = gui.create_api_key_input(root, "Trader Made API Key:", trader_made_api_key_var, 'trader_made')
@@ -183,17 +188,17 @@ def main():
 
 
     # Create Boolean variables for normalization and standardization
-    normalization_var = tk.BooleanVar(value=False)
-    standardization_var = tk.BooleanVar(value=False)
+    normalization_var = tk.BooleanVar(value=the_app_state.get_normalization())
+    standardization_var = tk.BooleanVar(value=the_app_state.get_standardization())
 
     # Add checkboxes for normalization and standardization
-    normalization_checkbox = tk.Checkbutton(root, text="Normalization", var=normalization_var, command=event_handlers.update_checkboxes)
-    standardization_checkbox = tk.Checkbutton(root, text="Standardization", var=standardization_var, command=event_handlers.update_checkboxes)
+    # normalization_checkbox = tk.Checkbutton(root, text="Normalization", var=normalization_var, command=event_handlers.update_checkboxes)
+    # standardization_checkbox = tk.Checkbutton(root, text="Standardization", var=standardization_var, command=event_handlers.update_checkboxes)
 
     normalization_checkbox = tk.Checkbutton(root, text="Normalization", var=normalization_var, 
-                                            command=lambda: event_handlers.update_checkboxes(normalization_var, standardization_var, 'normalization'))
+                                            command=lambda: event_handlers.update_checkboxes(normalization_var, standardization_var, 'normalization', the_app_state))
     standardization_checkbox = tk.Checkbutton(root, text="Standardization", var=standardization_var, 
-                                            command=lambda: event_handlers.update_checkboxes(normalization_var, standardization_var, 'standardization'))
+                                            command=lambda: event_handlers.update_checkboxes(normalization_var, standardization_var, 'standardization', the_app_state))
 
 
     # Place the checkboxes in the GUI
@@ -215,17 +220,37 @@ def main():
     else:
         messagebox.showinfo("Update Required", "Please update your economic data before processing.")
 
+    # Date Range Label
+    date_range_label = tk.Label(root, text=f'{the_app_state.get_graphing_dates()[0]} to {the_app_state.get_graphing_dates()[1]}')
+    date_range_label.grid(row=19, column=0, columnspan=2)  
+
     # create date range button
-    date_range_button = tk.Button(root, text="Select Date Range", command=lambda: graph.ask_date_range(root, base_dir, the_app_state))
+    date_range_button = tk.Button(root, text="Select Date Range", command=lambda: graph.ask_date_range(root, base_dir, the_app_state, date_range_label, 'processed'))
     date_range_button.grid(row=18, column=0, columnspan=2) 
-    
+
     # Create the "GRAPH" button and place it in row 8
     graph_button = tk.Button(root, text="GRAPH", command=lambda: event_handlers.on_graph_click(root, base_dir, the_app_state))
-    graph_button.grid(row=20, column=2, columnspan=4)  # Place the button in row 8
+    graph_button.grid(row=20, column=2, columnspan=4) 
+
+
+    # Date Range Label Training Data
+    training_date_range_label = tk.Label(root, text=f'{the_app_state.get_training_dates()[0]} to {the_app_state.get_training_dates()[1]}')
+    training_date_range_label.grid(row=25, column=0, columnspan=2)  
+
+    # create date range button Training Data
+    training_date_range_button = tk.Button(root, text="Select Training Date Range", command=lambda: graph.ask_date_range(root, base_dir, the_app_state, training_date_range_label, 'training'))
+    training_date_range_button.grid(row=24, column=0, columnspan=2) 
+
+    train_model_button = tk.Button(root, text="Train Model", command=lambda: event_handlers.on_train_model_click(the_app_state, base_dir))
+    train_model_button.grid(row=26, column=1, columnspan=2) 
 
 
 
+     # Create the folders/files
+    utilities.create_missing_files_and_folders(base_dir)
 
+    root.update_idletasks()
+    root.after(100, utilities.focus_window(root)) 
     root.mainloop()
 
 

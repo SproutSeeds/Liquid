@@ -1,11 +1,1 @@
-{
-    "fred_api_key": "",
-    "alpha_vantage_api_key": "",
-    "trader_made_api_key": "",
-    "training_start_date": "2024-01-01",
-    "training_end_date": "2024-06-30",
-    "testing_start_date": "2024-07-01",
-    "testing_end_date": "2024-12-31",
-    "graphing_start_date": "2000-01-01",
-    "graphing_end_date": "2001-01-01"
-}
+{"config_file": "C:\\Users\\codyr\\OneDrive\\Documents\\_Cody\\USD_strength\\myapp\\settings.json", "training_start_date": "1950-01-01", "training_end_date": "2000-01-01", "testing_start_date": "2024-07-01", "testing_end_date": "2024-12-31", "graphing_start_date": "", "graphing_end_date": "", "trader_made_api_key": "hrIAlbc2HKEK3u6LjRDi", "fred_api_key": "21f3876b17d559fb44f618897bd9d026", "normalization": false, "standardization": false}

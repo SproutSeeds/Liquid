@@ -6,6 +6,8 @@ import datetime
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.adfvalues import mackinnonp, mackinnoncrit
+import statsmodels.api as sm
+from statsmodels.tsa.api import VAR
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 import utilities
@@ -166,8 +168,9 @@ def test_for_stationary_data(data, is_normalized, is_standardized, base_dir, win
 
     absolute_file_path = utilities.resource_path('Transform_Data_db/output/4_processed_stationary_data.csv', base_dir)
 
+    standardized_df.set_index('date', inplace=True)
     # Save the stationary data dictionary to a CSV file
-    stationary_data_df.to_csv(absolute_file_path, index=False)
+    stationary_data_df.to_csv(absolute_file_path, index=True)
 
     # Update the dictionary with the final, cleaned data
     for column in stationary_data_dict:
@@ -176,7 +179,8 @@ def test_for_stationary_data(data, is_normalized, is_standardized, base_dir, win
     print("Successfully created a dict with our stationary data, detailing the order of integration associated with each column of our data.")
 
 
-    return stationary_data_dict, stationary_data_df # Only return the dictionary
+
+    return stationary_data_dict, stationary_data_df 
 
 def make_data_stationary(data, column, period=12, max_differencing=5):
     series = data[column].replace(0, np.nan)  # Replace 0 with NaN to avoid issues with log transformation
@@ -296,3 +300,102 @@ def combine_economic_data_make_stationary_clean(is_normalized, is_standardized, 
 
     #4 return  
     return combined_LI_BF_stationary_data_dictionary
+
+def train_model(app_state, base_dir):
+    start_date, end_date = app_state.get_training_dates()
+    processed_dataframe = app_state.get_processed_dataframe()
+
+    # Convert the date column to datetime type if it's not already
+    processed_dataframe['date'] = pd.to_datetime(processed_dataframe['date'])
+
+    # isolate the processed data based on the user specified start and end date
+    training_dataframe = processed_dataframe[(processed_dataframe['date'] >= start_date) & (processed_dataframe['date'] <= end_date)]
+
+    absolute_file_path = utilities.resource_path('Training_Data/1_training_data.csv', base_dir)
+   
+    training_dataframe.set_index('date', inplace=True)
+    training_dataframe.to_csv(absolute_file_path, index=True)
+
+    # Set the training dataframe to state
+    app_state.set_training_dataframe(training_dataframe)
+
+    # gets the dataframe reference from state
+    training_dataframe = app_state.get_training_dataframe()
+
+    # explicitly stating the Month Start as the index frequency of the data
+    training_dataframe.index.freq = 'MS'
+
+
+    # declaring the model, pulling in VAR from statsmodels
+    model = VAR(training_dataframe)
+
+    # Select the optimal lag order
+    maxlags = min(10, len(training_dataframe) // len(training_dataframe.columns) - 1)
+    results = model.select_order(maxlags=maxlags)
+
+    # print(results.summary())
+
+    # Fit the VAR model using the optimal lag order
+    optimal_lag = results.aic
+    fitted_model = model.fit(optimal_lag)
+
+
+
+    # Display model summary
+    print(fitted_model.summary())
+
+
+
+    # print(app_state.get_training_dataframe())
+
+
+    # print(f"The start date: {start_date} The end date: {end_date}")
+    # print(app_state.get_processed_dataframe())
+
+
+"""
+POTENTIAL CODE
+
+
+# List of file names for the currency pair data
+currency_files = ['AUDUSD_historical_data.csv', 'EURUSD_historical_data.csv', ...]  # continue for all files
+
+# Initialize an empty DataFrame to hold all the combined data
+combined_data = pd.DataFrame()
+
+# Loop through each file and merge it into the combined DataFrame
+for file in currency_files:
+    # Read the currency data file
+    currency_data = pd.read_csv(file)
+
+    # Convert the 'Date' column to datetime
+    currency_data['Date'] = pd.to_datetime(currency_data['Date'])
+
+    # Set the 'Date' column as the index
+    currency_data.set_index('Date', inplace=True)
+
+    # Extract the currency pair code from the file name, assuming the format is 'CURRENCYCODE_historical_data.csv'
+    currency_code = file.split('_')[0]
+
+    # Rename the relevant column (e.g., 'Close') to the currency code for clarity
+    # Assuming you want to use the closing price for resampling; adjust if using a different column
+    currency_data.rename(columns={'Close': currency_code}, inplace=True)
+
+    # Select only the column with the renamed currency data (if there are multiple columns)
+    currency_data = currency_data[[currency_code]]
+
+    # If this is the first file, assign it to combined_data; otherwise, join it with the existing combined_data
+    if combined_data.empty:
+        combined_data = currency_data
+    else:
+        # Use an outer join to ensure all dates are included, even if some data is missing for some dates
+        combined_data = combined_data.join(currency_data, how='outer')
+
+# Now, combined_data contains all currency data with each currency as a column
+
+# Resample to get the first entry of each month (assumes the 'Open' price is the one you want)
+monthly_data = combined_data.resample('MS').first()
+
+# Save the resampled monthly data to a new CSV file
+monthly_data.to_csv('monthly_currency_data.csv', index=True)
+"""

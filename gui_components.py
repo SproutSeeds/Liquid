@@ -5,6 +5,7 @@ import json_handler
 
 def create_root_window():
     root = tk.Tk()
+    root.withdraw() 
     root.title("Data Fetching Application")
     root.geometry("1200x900")
     return root
@@ -29,7 +30,7 @@ def create_option_menu(parent, textvariable, options, row, column, padx=10, pady
     menu.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
     return menu
 
-def create_api_key_input(root, label_text, api_key_text_var, api_key_type, base_dir, row, column):
+def create_api_key_input(root, label_text, api_key_text_var, api_key_type, base_dir, app_state, row, column):
     frame = ttk.Frame(root)
     
     # Create label and entry inside the frame
@@ -38,14 +39,19 @@ def create_api_key_input(root, label_text, api_key_text_var, api_key_type, base_
     
     # Function to be called when Enter is pressed
     def on_enter_press(event):
-        json_handler.save_api_keys(api_key_text_var.get(), api_key_type, base_dir)
+        if api_key_type == 'fred':
+            app_state.set_fred_api_key(api_key_text_var.get())
+        elif api_key_type == 'trader_made':
+            app_state.set_trader_made_api_key(api_key_text_var.get())
+
+        # json_handler.save_api_keys(api_key_text_var.get(), api_key_type, base_dir)
         frame.destroy()  # This will remove the frame and all widgets inside it
 
     entry.bind('<Return>', on_enter_press)
     
     # Place the frame using grid
     frame.grid(row=row, column=column, sticky='nw')
-    return frame
+    return frame, entry
 
 def update_fetch_all_button_text(economic_var, currency_var, fetch_all_button):
     economic_checked = economic_var.get()
@@ -59,3 +65,12 @@ def update_fetch_all_button_text(economic_var, currency_var, fetch_all_button):
         fetch_all_button.config(text="Fetch All Currency Data")
     else:
         fetch_all_button.config(text="Fetch All Data")
+
+def update_date_range_label(app_state, label, type):
+
+    if type == 'processed':
+        start_date, end_date = app_state.get_graphing_dates()  # Adjust the method if needed
+    elif type == 'training':
+        start_date, end_date = app_state.get_training_dates()  # Adjust the method if needed
+
+    label.config(text=f"{start_date} to {end_date}")

@@ -5,6 +5,7 @@ import pandas as pd
 from tkinter import simpledialog
 from matplotlib.figure import Figure
 import utilities
+import gui_components
 
 # Function to generate and display the graph in a separate window
 def generate_graph(root, base_dir, app_state):
@@ -52,12 +53,24 @@ def generate_graph(root, base_dir, app_state):
     canvas.draw()
 
 # Function to ask for date range
-def ask_date_range(root, base_dir, app_state):
-    default_start, default_end = app_state.get_graphing_dates()
-    start_date = simpledialog.askstring("Input", "Enter start date (YYYY-MM-DD):", initialvalue=default_start, parent=root)
-    end_date = simpledialog.askstring("Input", "Enter end date (YYYY-MM-DD):", initialvalue=default_end, parent=root)
+def ask_date_range(root, base_dir, app_state, label, type):
     
-    app_state.set_graphing_dates(start_date, end_date)
+    if type == 'processed':
+        default_start, default_end = app_state.get_graphing_dates()
+        start_date = simpledialog.askstring("Input", "Enter start date (YYYY-MM-DD):", initialvalue=default_start, parent=root)
+        end_date = simpledialog.askstring("Input", "Enter end date (YYYY-MM-DD):", initialvalue=default_end, parent=root)
+        app_state.set_graphing_dates(start_date, end_date)
+        gui_components.update_date_range_label(app_state, label, type)
+
+    elif type == 'training':
+        default_start, default_end = app_state.get_training_dates()
+        start_date = simpledialog.askstring("Input", "Enter start date (YYYY-MM-DD):", initialvalue=default_start, parent=root)
+        end_date = simpledialog.askstring("Input", "Enter end date (YYYY-MM-DD):", initialvalue=default_end, parent=root)
+        app_state.set_training_dates(start_date, end_date)
+        gui_components.update_date_range_label(app_state, label, type)
+
+
+
 
     # if start_date and end_date:
     #     generate_graph(root, start_date, end_date, base_dir)

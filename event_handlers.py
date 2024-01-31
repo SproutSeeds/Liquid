@@ -6,6 +6,7 @@ import graphing as graph
 from tkinter import messagebox
 import time
 import csv_handlers
+import gui_components
 
 
 def on_data_type_selection(var, economic_data_menu, currency_pair_menu, fetch_all_button):
@@ -22,8 +23,6 @@ def on_data_type_selection(var, economic_data_menu, currency_pair_menu, fetch_al
         economic_data_menu.grid_remove()  # Hide the economic data menu
         currency_pair_menu.grid_remove()  # Hide the currency pair menu
         fetch_all_button.grid_remove()  # Hide the fetch all button
-
-    
 
 def on_fetch_button_click(data_type_var, economic_data_var, currency_pair_var, fred_api_key_var, trader_made_api_key_var, base_dir):
     selected_data_type = data_type_var.get()
@@ -70,7 +69,6 @@ def on_fetch_all_data(fetch_economic, fetch_currency, fred_api_key_var, trader_m
 
     utilities.log_message("Data fetching complete.", console_output=True)
 
-
 def on_process_data_click(is_normalized, is_standardized, base_dir):
     try:
         # Saves processed data
@@ -83,26 +81,31 @@ def on_process_data_click(is_normalized, is_standardized, base_dir):
         # Handle errors - show an error message
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-
 def on_graph_click(root, base_dir, app_state):
         graph.generate_graph(root, base_dir, app_state)
 
-def update_checkboxes(normalization_var, standardization_var, clicked):
+def update_checkboxes(normalization_var, standardization_var, clicked, app_state):
     if clicked == 'normalization':
-        if normalization_var.get():
-            standardization_var.set(False)
-        else:
-            normalization_var.set(True)
-    elif clicked == 'standardization':
-        if standardization_var.get():
+        if app_state.get_normalization():
+            app_state.set_normalization(False)
             normalization_var.set(False)
         else:
+            app_state.set_normalization(True)
+            normalization_var.set(True)
+            
+            app_state.set_standardization(False)
+            standardization_var.set(False)
+
+    elif clicked == 'standardization':
+        if app_state.get_standardization():
+            app_state.set_standardization(False)
+            standardization_var.set(False)
+        else:
+            app_state.set_standardization(True)
             standardization_var.set(True)
 
-
-
-
-
-
-
-        # POTENTIAL CODE
+            app_state.set_normalization(False)
+            normalization_var.set(False)
+           
+def on_train_model_click(app_state, base_dir):
+    csv_handlers.train_model(app_state, base_dir)
