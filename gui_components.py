@@ -36,6 +36,7 @@ def create_api_key_input(root, label_text, api_key_text_var, api_key_type, base_
     # Create label and entry inside the frame
     label = create_label(frame, label_text, row=0, column=0)
     entry = create_entry(frame, api_key_text_var, row=0, column=1)
+    entry.configure(show='*')
     
     # Function to be called when Enter is pressed
     def on_enter_press(event):

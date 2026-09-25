@@ -7,3 +7,11 @@ dist/
 build/
 .vscode/
 my_new_venv/
+
+# Local credentials and runtime logs
+settings.json
+.settings-*
+app_log.txt
+*.log
+.env
+.env.*

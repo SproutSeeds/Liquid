@@ -1,6 +1,7 @@
 import json
 import os
 import pandas as pd
+import settings_management
 
 class AppState:
 
@@ -31,6 +32,8 @@ class AppState:
             print(f"An error occurred while loading the CSV file: {e}")
 
     def load_default_settings(self, file_path):
+        if not os.path.isfile(file_path):
+            file_path = os.path.join(os.path.dirname(file_path), 'settings.example.json')
         try:
             with open(file_path, 'r') as file:
                 settings = json.load(file)
@@ -71,8 +74,7 @@ class AppState:
             state_dict.pop(key, None)  # The use of .pop() with None ensures no error if the key doesn't exist
 
         # Serialize and save the modified state
-        with open(self.config_file, 'w') as file:
-            json.dump(state_dict, file)
+        settings_management.save_settings(self.config_file, state_dict)
 
     def set_training_dates(self, start_date, end_date):
         self.training_start_date = start_date
@@ -103,14 +105,14 @@ class AppState:
         self.save_state()
     
     def get_trader_made_api_key(self):
-        return self.trader_made_api_key
+        return os.environ.get('TRADERMADE_API_KEY', self.trader_made_api_key or '')
 
     def set_fred_api_key(self, api_key):
         self.fred_api_key = api_key
         self.save_state()
 
     def get_fred_api_key(self):
-        return self.fred_api_key
+        return os.environ.get('FRED_API_KEY', self.fred_api_key or '')
     
     def set_normalization(self, normal_bool):
         self.normalization = normal_bool

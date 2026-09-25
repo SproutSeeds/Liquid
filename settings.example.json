@@ -1,0 +1,12 @@
+{
+  "training_start_date": "1950-01-01",
+  "training_end_date": "2000-01-01",
+  "testing_start_date": "2024-07-01",
+  "testing_end_date": "2024-12-31",
+  "graphing_start_date": "",
+  "graphing_end_date": "",
+  "trader_made_api_key": "",
+  "fred_api_key": "",
+  "normalization": false,
+  "standardization": false
+}

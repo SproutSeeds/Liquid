@@ -9,7 +9,7 @@ from datetime import datetime
 
 def fetch_economic_data(api_key, data_type, base_dir):
     series_id = None
-    utilities.log_message(f"this is inside the final fetch economic data, this is the API KEY for FRED {api_key}", console_output=False)
+    utilities.log_message("Fetching FRED economic data", console_output=False)
     
     if not api_key:
         print("API key is missing. Please enter an API key.")
